@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <script src="https://kit.fontawesome.com/ceb4b94ff8.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <title>Wellcome book shopping</title>
+    <style>
+        .selected {
+            background: rgb(94, 222, 245);
+            border: 1px solid black;
+        }
+        
+        .shop {
+            background: rgb(94, 222, 245);
+            border: 1px solid black;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="shop">
+        <div>
+            <input type="text" placeholder="search book" onchange="filterBooks(event)" />
+        </div>
+        <h1 style="margin-left: 80px;font-weight: 500;">Online Book shopping</h1>
+        <div id="cart">
+
+
+        </div>
+    </div>
+
+
+
+    <div class="container">
+        <div class="row"></div>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script>
+        const card = document.querySelector(".row");
+        window.onload = () => {
+
+            fetch("https://striveschool-api.herokuapp.com/books")
+
+            .then(response => response.json())
+                .then(body => {
+
+                    console.log(body)
+
+                    const row = document.querySelector(".row")
+
+                    for (let i = 0; i < body.length; i++) {
+                        const obj = body[i]
+
+                        const col = document.createElement("div")
+                        col.className = "col-3"
+
+                        col.innerHTML = `
+                                
+                                <div class="card" id="remove-card">
+                                    <img src="${obj.img}" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${obj.title}</h5>
+                                        <p class="card-text">${obj.price}€</p>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="myFunction(event)" >
+                                            <i class="fas fa-cart-plus"></i>
+                      </button>
+                      <button type="button" onclick = "removeimage(event)" id="btn-delete" class="btn btn-sm btn-outline-secondary">
+                        <i class="far fa-trash-alt"></i>
+                      </button>
+                                    </div>
+                                </div>
+                                `
+
+                        row.appendChild(col)
+                    }
+
+
+                })
+                .catch(error => console.error(error))
+
+        }
+
+        function removeimage(event) {
+            const removecontent = document.getElementById("remove-card")
+            removecontent.remove()
+
+        }
+        let cart = []
+
+
+        const myFunction = function(event) {
+
+            let item = event.target.closest(".card");
+            item.classList.toggle("selected");
+
+
+
+
+        }
+        const filterBooks = bookArr.filter(book => obj.title.lowercase().includes(query.tolowercase()))
+        const query = event.target.value
+    </script>
+
+</body>
+
+</html>
